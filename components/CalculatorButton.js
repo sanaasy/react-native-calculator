@@ -15,7 +15,7 @@ export default class CalculatorButton extends React.Component {
 
   // add styles.container in [] because dynamic styles so add as array
   render() {
-    var bc = this.props.backgroundColor
+    const bc = this.props.backgroundColor
 
     return (
       <TouchableOpacity onPress={this.props.onPress} 

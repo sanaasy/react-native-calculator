@@ -7,7 +7,7 @@ require("./../lib/swisscalc.display.memoryDisplay.js");
 require("./../lib/swisscalc.calc.calculator.js");
 
 import React from 'react';
-import { StyleSheet, View, Text, PanResponder } from 'react-native';
+import { StyleSheet, View, Text, PanResponder, Dimensions } from 'react-native';
 import { CalculatorButton, CalculatorDisplay } from './../components';
 
 export default class CalculatorScreen extends React.Component {
@@ -17,10 +17,17 @@ export default class CalculatorScreen extends React.Component {
 
     this.state = {
       display: "0",
+      orientation: "portrait",
     };
 
     this.oc = global.swisscalc.lib.operatorCache;
     this.calc = new global.swisscalc.calc.calculator();
+
+    Dimensions.addEventListener("change", () => {
+      const { width, height } = Dimensions.get("window");
+      const checkOrientation = (width > height) ? "landscape" : "portrait";
+      this.setState({ orientation: checkOrientation });
+    });
 
     // to implement the swipe
     this.panResponder = PanResponder.create({
@@ -71,9 +78,9 @@ export default class CalculatorScreen extends React.Component {
     this.setState({ display: this.calc.getMainDisplay() });
   }
 
-  render() {
+  renderPortrait() {
     return (
-      <View style={styles.container}>
+      <View style={{flex:1}}>
 
         <View style={styles.displayContainer} {...this.panResponder.panHandlers}>
           <CalculatorDisplay display={this.state.display} />
@@ -115,6 +122,23 @@ export default class CalculatorScreen extends React.Component {
           </View>
         </View>
 
+      </View>
+    )
+  }
+
+  renderLandscape() {
+    return (
+      <View style={{flex: 1, paddingTop: 50}}>
+        <Text style={{color:"white"}}>Landscape Mode</Text>
+      </View>
+    )
+  }
+
+  render() {
+    const view = (this.state.orientation == "portrait") ? this.renderPortrait() : this.renderLandscape();
+    return (
+      <View style={styles.container}>
+        {view}
       </View>
     )
   }
