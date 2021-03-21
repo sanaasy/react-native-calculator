@@ -17,6 +17,12 @@ export default class CalculatorDisplay extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: { },
-  display: { },
+  container: { 
+    padding: 20,
+  },
+  display: { 
+    fontSize: 70,
+    color: "white",
+    textAlign: "right",
+  },
 });

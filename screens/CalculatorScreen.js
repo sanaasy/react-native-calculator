@@ -7,7 +7,7 @@ require("./../lib/swisscalc.display.memoryDisplay.js");
 require("./../lib/swisscalc.calc.calculator.js");
 
 import React from 'react';
-import { View, Text } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { CalculatorButton, CalculatorDisplay } from './../components';
 
 export default class CalculatorScreen extends React.Component {
@@ -25,10 +25,64 @@ export default class CalculatorScreen extends React.Component {
 
   render() {
     return (
-      <View style={{paddingTop:50}}>
-        <CalculatorDisplay display={this.state.display} />
-        <CalculatorButton title="+" color="red" backgroundColor="blue" />
+      <View style={styles.container}>
+
+        <View style={styles.displayContainer}>
+          <CalculatorDisplay display={this.state.display} />
+        </View>
+
+        <View>
+          <View style={styles.buttonRow}>
+            <CalculatorButton title="C" color="red" backgroundColor="blue" />
+            <CalculatorButton title="+/-" color="red" backgroundColor="blue" />
+            <CalculatorButton title="%" color="red" backgroundColor="blue" />
+            <CalculatorButton title="÷" color="red" backgroundColor="blue" />
+          </View>
+
+          <View style={styles.buttonRow}>
+            <CalculatorButton title="7" color="red" backgroundColor="blue" />
+            <CalculatorButton title="8" color="red" backgroundColor="blue" />
+            <CalculatorButton title="9" color="red" backgroundColor="blue" />
+            <CalculatorButton title="×" color="red" backgroundColor="blue" />
+          </View>
+          
+          <View style={styles.buttonRow}>
+            <CalculatorButton title="4" color="red" backgroundColor="blue" />
+            <CalculatorButton title="5" color="red" backgroundColor="blue" />
+            <CalculatorButton title="6" color="red" backgroundColor="blue" />
+            <CalculatorButton title="-" color="red" backgroundColor="blue" />
+          </View>
+
+          <View style={styles.buttonRow}>
+            <CalculatorButton title="1" color="red" backgroundColor="blue" />
+            <CalculatorButton title="2" color="red" backgroundColor="blue" />
+            <CalculatorButton title="3" color="red" backgroundColor="blue" />
+            <CalculatorButton title="+" color="red" backgroundColor="blue" />
+          </View>
+
+          <View style={styles.buttonRow}>
+            <CalculatorButton title="0" color="red" backgroundColor="blue" style={{ flex: 2 }} />
+            <CalculatorButton title="." color="red" backgroundColor="blue" />
+            <CalculatorButton title="=" color="red" backgroundColor="blue" />
+          </View>
+        </View>
+
       </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: { 
+    flex: 1, 
+    backgroundColor: "black",
+  },
+  displayContainer: { 
+    flex: 1, 
+    justifyContent: "flex-end",
+  },
+  buttonRow: { 
+    flexDirection: "row", 
+    justifyContent: "space-between", 
+  },
+});
