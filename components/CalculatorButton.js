@@ -8,6 +8,8 @@ export default class CalculatorButton extends React.Component {
     title: "",
     color: "white",
     backgroundColor: "black",
+    radius: 40,
+    
     style: { },
   }
 
