@@ -7,7 +7,7 @@ require("./../lib/swisscalc.display.memoryDisplay.js");
 require("./../lib/swisscalc.calc.calculator.js");
 
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, PanResponder } from 'react-native';
 import { CalculatorButton, CalculatorDisplay } from './../components';
 
 export default class CalculatorScreen extends React.Component {
@@ -21,6 +21,19 @@ export default class CalculatorScreen extends React.Component {
 
     this.oc = global.swisscalc.lib.operatorCache;
     this.calc = new global.swisscalc.calc.calculator();
+
+    // to implement the swipe
+    this.panResponder = PanResponder.create({
+      onStartShouldSetPanResponder: (evt, gestureState) => true,
+      onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
+      onMoveShouldSetPanResponder: (evt, gestureState) => true,
+      onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
+      onPanResponderRelease: (evt, gestureState) => {
+        if (Math.abs(gestureState.dx) >= 50) {
+          this.onBackspacePress();
+        }
+      }
+    });
   }
 
   onDigitPress = (digit) => {
@@ -30,6 +43,11 @@ export default class CalculatorScreen extends React.Component {
 
   onClearPress = () => {
     this.calc.clear();
+    this.setState({ display: this.calc.getMainDisplay() });
+  }
+
+  onBackspacePress = () => {
+    this.calc.backspace();
     this.setState({ display: this.calc.getMainDisplay() });
   }
 
@@ -57,7 +75,7 @@ export default class CalculatorScreen extends React.Component {
     return (
       <View style={styles.container}>
 
-        <View style={styles.displayContainer}>
+        <View style={styles.displayContainer} {...this.panResponder.panHandlers}>
           <CalculatorDisplay display={this.state.display} />
         </View>
 
